@@ -1,7 +1,7 @@
 class_name PositionLock
 extends CameraControllerBase
 
-@export var crosshair_length:float = 5.0
+const CROSSHAIR_LENGTH:float = 5.0
 
 func _ready() -> void:
 	super()
@@ -33,16 +33,16 @@ func draw_logic() -> void:
 	
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
 	# Top
-	immediate_mesh.surface_add_vertex(Vector3(0, 0, crosshair_length))
+	immediate_mesh.surface_add_vertex(Vector3(0, 0, CROSSHAIR_LENGTH))
 	immediate_mesh.surface_add_vertex(Vector3(0, 0, 0))
 	# Left
-	immediate_mesh.surface_add_vertex(Vector3(-crosshair_length, 0, 0))
+	immediate_mesh.surface_add_vertex(Vector3(-CROSSHAIR_LENGTH, 0, 0))
 	immediate_mesh.surface_add_vertex(Vector3(0, 0, 0))
 	# Right
-	immediate_mesh.surface_add_vertex(Vector3(crosshair_length, 0, 0))
+	immediate_mesh.surface_add_vertex(Vector3(CROSSHAIR_LENGTH, 0, 0))
 	immediate_mesh.surface_add_vertex(Vector3(0, 0, 0))
 	# Bottom
-	immediate_mesh.surface_add_vertex(Vector3(0, 0, -crosshair_length))
+	immediate_mesh.surface_add_vertex(Vector3(0, 0, -CROSSHAIR_LENGTH))
 	immediate_mesh.surface_add_vertex(Vector3(0, 0, 0))
 	immediate_mesh.surface_end()
 
