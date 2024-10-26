@@ -22,7 +22,7 @@ extends MeshInstance3D
 		subdivisions = value
 		_generate_terrain()
 		
-@export var amplitude:float = 10.0 :
+@export var amplitude:float = 80.0 :
 	set(value):
 		amplitude = value
 		_generate_terrain()

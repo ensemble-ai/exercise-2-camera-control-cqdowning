@@ -25,28 +25,28 @@ parameter_name = "beach_height"
 hint = 1
 max = 50.0
 default_value_enabled = true
-default_value = 4.0
+default_value = 3.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_uwlhf"]
 parameter_name = "grass_height"
 hint = 1
 max = 50.0
 default_value_enabled = true
-default_value = 7.0
+default_value = 10.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_yvm4b"]
 parameter_name = "mountain_height"
 hint = 1
 max = 50.0
 default_value_enabled = true
-default_value = 15.0
+default_value = 25.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_jooo0"]
 parameter_name = "snowcap_height"
 hint = 1
-max = 50.0
+max = 80.0
 default_value_enabled = true
-default_value = 25.0
+default_value = 60.0
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_orkpx"]
 parameter_name = "color_water"
@@ -90,7 +90,6 @@ parameter_name = "water_height"
 hint = 1
 max = 50.0
 default_value_enabled = true
-default_value = 2.0
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_pwp74"]
 input_name = "inv_view_matrix"
@@ -103,15 +102,15 @@ code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 uniform vec4 color_water : source_color = vec4(0.000000, 0.086274, 1.000000, 1.000000);
-uniform float water_height : hint_range(0, 50) = 2;
+uniform float water_height : hint_range(0, 50) = 0;
 uniform vec4 color_beach : source_color = vec4(1.000000, 0.787152, 0.607912, 1.000000);
-uniform float beach_height : hint_range(0, 50) = 4;
+uniform float beach_height : hint_range(0, 50) = 3;
 uniform vec4 color_grass : source_color = vec4(0.371280, 0.767443, 0.000002, 1.000000);
-uniform float grass_height : hint_range(0, 50) = 7;
+uniform float grass_height : hint_range(0, 50) = 10;
 uniform vec4 color_mountain : source_color = vec4(0.334122, 0.334122, 0.334122, 1.000000);
-uniform float mountain_height : hint_range(0, 50) = 15;
+uniform float mountain_height : hint_range(0, 50) = 25;
 uniform vec4 color_snowcap : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
-uniform float snowcap_height : hint_range(0, 50) = 25;
+uniform float snowcap_height : hint_range(0, 80) = 60;
 uniform vec4 color_deep : source_color = vec4(0.000837, 0.000000, 0.393132, 1.000000);
 uniform float deep_height : hint_range(-50, 50) = -50;
 
@@ -206,6 +205,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-2190.69, 2731.74)
 nodes/fragment/0/position = Vector2(960, 1000)
 nodes/fragment/6/node = SubResource("VisualShaderNodeFloatParameter_bu214")
 nodes/fragment/6/position = Vector2(-2260, 1800)
