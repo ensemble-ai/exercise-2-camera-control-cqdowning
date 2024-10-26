@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://88du8yjefx8j"]
+[gd_scene load_steps=15 format=4 uid="uid://88du8yjefx8j"]
 
 [ext_resource type="PackedScene" uid="uid://dtm13sp1jsrwi" path="res://scenes/vessel.tscn" id="1_oaql3"]
 [ext_resource type="Script" path="res://scripts/camera_selector.gd" id="2_qffo5"]
@@ -7,8 +7,10 @@
 [ext_resource type="Script" path="res://scripts/camera_controllers/push_box.gd" id="4_76yn6"]
 [ext_resource type="PackedScene" uid="uid://kafb18nsdh54" path="res://scenes/terrain_manager.tscn" id="4_josyl"]
 [ext_resource type="Script" path="res://scripts/camera_controllers/position_lock.gd" id="5_sju6s"]
+[ext_resource type="Script" path="res://scripts/camera_controllers/position_lock_lerp.gd" id="7_7gmti"]
 [ext_resource type="AudioStream" uid="uid://8oocl3shp0us" path="res://assets/audio/VGMA Challenge - July 2nd.wav" id="7_34q6c"]
 [ext_resource type="Script" path="res://scripts/camera_controllers/autoscroller.gd" id="7_qrkfw"]
+[ext_resource type="Script" path="res://scripts/camera_controllers/lerp_target_focus.gd" id="8_12lbp"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vmnwv"]
 _surfaces = [{
@@ -44,7 +46,7 @@ terrain_manager = NodePath("../TerrainManager")
 
 [node name="CameraSelector" type="Node" parent="." node_paths=PackedStringArray("cameras")]
 script = ExtResource("2_qffo5")
-cameras = [NodePath("../PositionLockCamera"), NodePath("../PushBoxCamera"), NodePath("../AutoscrollerCamera")]
+cameras = [NodePath("../PushBoxCamera"), NodePath("../PositionLockCamera"), NodePath("../AutoscrollerCamera"), NodePath("../PositionLockLerpCamera"), NodePath("../LerpTargetFocusCamera")]
 
 [node name="PushBoxCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_ttnp6")]
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 30, 0)
@@ -63,6 +65,28 @@ script = ExtResource("5_sju6s")
 target = NodePath("../Vessel")
 
 [node name="debug" type="Label" parent="PositionLockCamera"]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_4fllx")
+
+[node name="PositionLockLerpCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_ttnp6")]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 30, 0)
+script = ExtResource("7_7gmti")
+target = NodePath("../Vessel")
+
+[node name="debug" type="Label" parent="PositionLockLerpCamera"]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_4fllx")
+
+[node name="LerpTargetFocusCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_ttnp6")]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 30, 0)
+script = ExtResource("8_12lbp")
+target = NodePath("../Vessel")
+
+[node name="debug" type="Label" parent="LerpTargetFocusCamera"]
 visible = false
 offset_right = 40.0
 offset_bottom = 23.0
