@@ -55,6 +55,14 @@ func _generate_terrain() -> void:
 		var v:Vector3 = _mdt.get_vertex(index)
 		v.y = noise.get_noise_2d(v.x, v.z) * amplitude
 		_mdt.set_vertex(index, v)
+		
+		var offset = 5.0
+		var up_height:float = noise.get_noise_2d(v.x, v.z - offset) * amplitude
+		var left_height:float = noise.get_noise_2d(v.x - offset, v.z) * amplitude
+		var right_height:float = noise.get_noise_2d(v.x + offset, v.z) * amplitude
+		var down_height:float = noise.get_noise_2d(v.x, v.z + offset) * amplitude
+		_mdt.set_vertex_normal(index, Vector3(left_height - right_height, v.y, up_height - down_height).normalized())
+		
 	mesh = array_mesh
 	mesh.clear_surfaces()
 	_mdt.commit_to_surface(array_mesh, 0)

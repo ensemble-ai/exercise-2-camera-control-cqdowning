@@ -23,30 +23,30 @@ expression = "if(deep_h >= world_pos.y) {
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_csb2i"]
 parameter_name = "beach_height"
 hint = 1
-max = 10.0
+max = 50.0
 default_value_enabled = true
-default_value = 1.0
+default_value = 4.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_uwlhf"]
 parameter_name = "grass_height"
 hint = 1
-max = 10.0
+max = 50.0
 default_value_enabled = true
-default_value = 2.0
+default_value = 7.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_yvm4b"]
 parameter_name = "mountain_height"
 hint = 1
-max = 10.0
+max = 50.0
 default_value_enabled = true
-default_value = 5.0
+default_value = 15.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_jooo0"]
 parameter_name = "snowcap_height"
 hint = 1
-max = 10.0
+max = 50.0
 default_value_enabled = true
-default_value = 7.0
+default_value = 25.0
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_orkpx"]
 parameter_name = "color_water"
@@ -75,20 +75,22 @@ default_value_enabled = true
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_7eyeg"]
 parameter_name = "color_deep"
 default_value_enabled = true
-default_value = Color(0.000226961, 0, 0.205221, 1)
+default_value = Color(0.000836729, 0, 0.393132, 1)
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_7h0no"]
 parameter_name = "deep_height"
 hint = 1
-max = 10.0
+min = -50.0
+max = 50.0
 default_value_enabled = true
-default_value = -2.0
+default_value = -50.0
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_bu214"]
 parameter_name = "water_height"
 hint = 1
-max = 10.0
+max = 50.0
 default_value_enabled = true
+default_value = 2.0
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_pwp74"]
 input_name = "inv_view_matrix"
@@ -101,17 +103,17 @@ code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 uniform vec4 color_water : source_color = vec4(0.000000, 0.086274, 1.000000, 1.000000);
-uniform float water_height : hint_range(0, 10) = 0;
+uniform float water_height : hint_range(0, 50) = 2;
 uniform vec4 color_beach : source_color = vec4(1.000000, 0.787152, 0.607912, 1.000000);
-uniform float beach_height : hint_range(0, 10) = 1;
+uniform float beach_height : hint_range(0, 50) = 4;
 uniform vec4 color_grass : source_color = vec4(0.371280, 0.767443, 0.000002, 1.000000);
-uniform float grass_height : hint_range(0, 10) = 2;
+uniform float grass_height : hint_range(0, 50) = 7;
 uniform vec4 color_mountain : source_color = vec4(0.334122, 0.334122, 0.334122, 1.000000);
-uniform float mountain_height : hint_range(0, 10) = 5;
+uniform float mountain_height : hint_range(0, 50) = 15;
 uniform vec4 color_snowcap : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
-uniform float snowcap_height : hint_range(0, 10) = 7;
-uniform vec4 color_deep : source_color = vec4(0.000227, 0.000000, 0.205221, 1.000000);
-uniform float deep_height : hint_range(0, 10) = -2;
+uniform float snowcap_height : hint_range(0, 50) = 25;
+uniform vec4 color_deep : source_color = vec4(0.000837, 0.000000, 0.393132, 1.000000);
+uniform float deep_height : hint_range(-50, 50) = -50;
 
 
 
