@@ -37,10 +37,11 @@ func _process(delta: float) -> void:
 	# The direction the camera should move in
 	var camera_player_direction:Vector3 = (tpos - cpos).normalized()
 
-	if cdistance < 0.25:
+	if cdistance < 0.5 && target.velocity.length() < 0.01:
 		cdistance = 0.0
 		camera_player_direction = Vector3(0.0, 0.0, 0.0)
 		global_position = tpos
+	
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
 		global_position += lead_speed * camera_lead_direction * delta
 		_catchup_delay_timer.start(catchup_delay_duration)

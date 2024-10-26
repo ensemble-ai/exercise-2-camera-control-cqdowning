@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	# The direction the camera should move in
 	var cdirection:Vector3 = (tpos - cpos).normalized()
 	
-	if cdistance < 0.25:
+	if cdistance < 0.5 && target.velocity.length() < 0.01:
 		cdistance = 0.0
 		cdirection = Vector3(0.0, 0.0, 0.0)
 		global_position = tpos
