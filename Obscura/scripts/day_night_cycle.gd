@@ -1,14 +1,14 @@
 class_name DayNightCycle
 extends DirectionalLight3D
 
-@export var speed:float = 10.0
+@export var speed:float = 7.0
 @export var sunrise_color:Color
 @export var day_color:Color
 @export var sunset_color:Color
 @export var night_color:Color
 
-const DAY_LENGTH:float = 140.0
-const NIGHT_LENGTH:float = 100.0
+const DAY_LENGTH:float = 160.0
+const NIGHT_LENGTH:float = 80.0
 
 var _current_time:float = 0.0
 var _is_daytime:bool = true

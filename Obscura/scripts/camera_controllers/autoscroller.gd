@@ -1,8 +1,8 @@
 class_name Autoscroller
 extends CameraControllerBase
 
-@export var top_left:Vector2 = Vector2(-13.0, 7.0)
-@export var bottom_right:Vector2 = Vector2(13.0, -7.0)
+@export var top_left:Vector2 = Vector2(-24.0, 12.0)
+@export var bottom_right:Vector2 = Vector2(24.0, -12.0)
 @export var autoscroll_speed:Vector3 = Vector3(3.0, 0.0, 3.0)
 
 func _ready() -> void:

@@ -13,6 +13,7 @@ func _ready():
 	if(len(cameras) > current_controller+1):
 		#cameras[current_controller].make_current()
 		cameras[current_controller].call_deferred("make_current")
+		cameras[current_controller].reset_to_target()
 
 
 func _process(_delta):
@@ -25,6 +26,7 @@ func _process(_delta):
 			if null != cameras[index]:
 				if index == current_controller:
 					cameras[current_controller].make_current()
+					cameras[current_controller].reset_to_target()
 				else:
 					cameras[index].current = false
 					cameras[index].draw_camera_logic = false
@@ -34,6 +36,7 @@ func _process(_delta):
 				if null != cameras[index]:
 					current_controller = index
 					cameras[current_controller].make_current()
+					cameras[current_controller].reset_to_target()
 					
 			
 		
