@@ -30,28 +30,28 @@ func _process(delta: float) -> void:
 	if pushbox_diff_between_top_edges < 0:
 		global_position.z += pushbox_diff_between_top_edges
 	elif speedup_diff_between_top_edges < 0:
-		global_position.z += target.velocity.z * push_ratio * delta
+		global_position.z += clamp(target.velocity.z * push_ratio * delta, -INF, 0.0)
 	# Left
 	var pushbox_diff_between_left_edges = (tpos.x - target.WIDTH / 2.0) - (cpos.x + pushbox_top_left.x)
 	var speedup_diff_between_left_edges = (tpos.x - target.WIDTH / 2.0) - (cpos.x + speedup_zone_top_left.x)
 	if pushbox_diff_between_left_edges < 0:
 		global_position.x += pushbox_diff_between_left_edges
 	elif speedup_diff_between_left_edges < 0:
-		global_position.x += target.velocity.x * push_ratio * delta
+		global_position.x += clamp(target.velocity.x * push_ratio * delta, -INF, 0.0)
 	# Right
 	var pushbox_diff_between_right_edges = (tpos.x + target.WIDTH / 2.0) - (cpos.x + pushbox_bottom_right.x)
 	var speedup_diff_between_right_edges = (tpos.x + target.WIDTH / 2.0) - (cpos.x + speedup_zone_bottom_right.x)
 	if pushbox_diff_between_right_edges > 0:
 		global_position.x += pushbox_diff_between_right_edges
 	elif speedup_diff_between_right_edges > 0:
-		global_position.x += target.velocity.x * push_ratio * delta
+		global_position.x += clamp(target.velocity.x * push_ratio * delta, 0.0, INF)
 	# Bottom
 	var pushbox_diff_between_bottom_edges = (tpos.z + target.HEIGHT / 2.0) - (cpos.z - pushbox_bottom_right.y)
 	var speedup_diff_between_bottom_edges = (tpos.z + target.HEIGHT / 2.0) - (cpos.z - speedup_zone_bottom_right.y)
 	if pushbox_diff_between_bottom_edges > 0:
 		global_position.z += pushbox_diff_between_bottom_edges
 	elif speedup_diff_between_bottom_edges > 0:
-		global_position.z += target.velocity.z * push_ratio	* delta
+		global_position.z += clamp(target.velocity.z * push_ratio	* delta, 0.0, INF)
 		
 	super(delta)
 
