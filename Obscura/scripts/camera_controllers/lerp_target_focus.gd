@@ -4,7 +4,7 @@ extends CameraControllerBase
 @export var lead_speed:float = 60
 # In seconds
 @export var catchup_delay_duration:float = 0.15
-@export var catchup_speed:float = 40.0
+@export var catchup_speed:float = 0.1
 @export var leash_distance:float = 13.0
 
 const CROSSHAIR_LENGTH:float = 5.0
@@ -36,17 +36,21 @@ func _process(delta: float) -> void:
 	var camera_lead_direction:Vector3 = (target.velocity).normalized()
 	# The direction the camera should move in
 	var camera_player_direction:Vector3 = (tpos - cpos).normalized()
-
-	if cdistance < 0.5 && target.velocity.length() < 0.01:
-		cdistance = 0.0
-		camera_player_direction = Vector3(0.0, 0.0, 0.0)
-		global_position = tpos
+	
+	# Fix camera overshooting
+	#if cdistance < 0.5 && target.velocity.length() < 0.01:
+		#cdistance = 0.0
+		#camera_player_direction = Vector3(0.0, 0.0, 0.0)
+		#global_position = tpos
 	
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
 		global_position += lead_speed * camera_lead_direction * delta
+		#global_position = lerp(global_position, leash_distance * camera_lead_direction + target.position, lead_speed)
 		_catchup_delay_timer.start(catchup_delay_duration)
 	elif _catchup_delay_timer.is_stopped():
-		global_position += catchup_speed * camera_player_direction * delta
+		#global_position += catchup_speed * camera_player_direction * delta
+		global_position = lerp(global_position, target.position, catchup_speed)
+
 	# Represents how far over the leash distance the camera has become
 	var over = cdistance - leash_distance
 	if over > 0.01:

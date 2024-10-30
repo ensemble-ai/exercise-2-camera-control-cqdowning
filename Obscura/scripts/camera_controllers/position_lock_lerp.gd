@@ -1,8 +1,8 @@
 class_name PositionLockLerp
 extends CameraControllerBase
 
-@export var follow_speed:float = 30
-@export var catchup_speed:float = 40.0
+@export var follow_speed:float = 0.05
+@export var catchup_speed:float = 0.075
 @export var leash_distance:float = 13.0
 
 const CROSSHAIR_LENGTH:float = 5.0
@@ -28,15 +28,19 @@ func _process(delta: float) -> void:
 	# The direction the camera should move in
 	var cdirection:Vector3 = (tpos - cpos).normalized()
 	
-	if cdistance < 0.5 && target.velocity.length() < 0.01:
-		cdistance = 0.0
-		cdirection = Vector3(0.0, 0.0, 0.0)
-		global_position = tpos
+	# Fix camera overshooting
+	#if cdistance < 0.5 && target.velocity.length() < 0.01:
+		#cdistance = 0.0
+		#cdirection = Vector3(0.0, 0.0, 0.0)
+		#global_position = tpos
 
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
-		global_position += follow_speed * cdirection * delta
+		#global_position += follow_speed * cdirection * delta
+		global_position = lerp(global_position, target.position, follow_speed)
 	else:
-		global_position += catchup_speed * cdirection * delta
+		#global_position += catchup_speed * cdirection * delta
+		global_position = lerp(global_position, target.position, catchup_speed)
+		
 	# Represents how far over the leash distance the camera has become
 	var over = cdistance - leash_distance
 	if over > 0.01:
