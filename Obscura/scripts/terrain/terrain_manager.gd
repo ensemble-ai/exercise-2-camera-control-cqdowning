@@ -56,6 +56,7 @@ func _generate_terrain() -> void:
 		v.y = noise.get_noise_2d(v.x, v.z) * amplitude
 		_mdt.set_vertex(index, v)
 		
+		# Calculate the vertex normals based on the noise map to get proper shading
 		var offset = 5.0
 		var up_height:float = noise.get_noise_2d(v.x, v.z - offset) * amplitude
 		var left_height:float = noise.get_noise_2d(v.x - offset, v.z) * amplitude

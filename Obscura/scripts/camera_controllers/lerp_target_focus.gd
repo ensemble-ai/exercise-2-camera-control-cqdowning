@@ -1,7 +1,7 @@
 class_name LerpTargetFocus
 extends CameraControllerBase
 
-@export var lead_speed:float = 60
+@export var lead_speed:float = 0.075
 # In seconds
 @export var catchup_delay_duration:float = 0.15
 @export var catchup_speed:float = 0.1
@@ -30,12 +30,13 @@ func _process(delta: float) -> void:
 	var cpos:Vector3 = global_position
 	tpos.y = 0.0
 	cpos.y = 0.0
-	# How far apart are the camera and player
-	var cdistance:float = abs(tpos - cpos).length()
+	
 	# The direction the camera should move in
 	var camera_lead_direction:Vector3 = (target.velocity).normalized()
 	# The direction the camera should move in
 	var camera_player_direction:Vector3 = (tpos - cpos).normalized()
+	
+	var camera_lead_speed:float = (target.velocity).length()
 	
 	# Fix camera overshooting
 	#if cdistance < 0.5 && target.velocity.length() < 0.01:
@@ -44,13 +45,20 @@ func _process(delta: float) -> void:
 		#global_position = tpos
 	
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
-		global_position += lead_speed * camera_lead_direction * delta
-		#global_position = lerp(global_position, leash_distance * camera_lead_direction + target.position, lead_speed)
+		#global_position += lead_speed * camera_lead_direction * delta
+		global_position = lerp(global_position, (0.5 * lead_speed * camera_lead_speed) * leash_distance * camera_lead_direction + target.position, lead_speed)
 		_catchup_delay_timer.start(catchup_delay_duration)
 	elif _catchup_delay_timer.is_stopped():
 		#global_position += catchup_speed * camera_player_direction * delta
 		global_position = lerp(global_position, target.position, catchup_speed)
-
+	
+	# Recalculate new positions 
+	tpos = target.global_position
+	cpos = global_position
+	tpos.y = 0.0
+	cpos.y = 0.0
+	# How far apart are the camera and player
+	var cdistance:float = abs(tpos - cpos).length()
 	# Represents how far over the leash distance the camera has become
 	var over = cdistance - leash_distance
 	if over > 0.01:

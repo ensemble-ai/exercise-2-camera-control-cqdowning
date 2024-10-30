@@ -23,10 +23,7 @@ func _process(delta: float) -> void:
 	var cpos:Vector3 = global_position
 	tpos.y = 0.0
 	cpos.y = 0.0
-	# How far apart are the camera and player
-	var cdistance:float = (tpos - cpos).length()
-	# The direction the camera should move in
-	var cdirection:Vector3 = (tpos - cpos).normalized()
+
 	
 	# Fix camera overshooting
 	#if cdistance < 0.5 && target.velocity.length() < 0.01:
@@ -40,7 +37,16 @@ func _process(delta: float) -> void:
 	else:
 		#global_position += catchup_speed * cdirection * delta
 		global_position = lerp(global_position, target.position, catchup_speed)
-		
+	
+	# Recalculate new positions 
+	tpos = target.global_position
+	cpos = global_position
+	tpos.y = 0.0
+	cpos.y = 0.0
+	# How far apart are the camera and player
+	var cdistance:float = (tpos - cpos).length()
+	# The direction the camera should move in
+	var cdirection:Vector3 = (tpos - cpos).normalized()
 	# Represents how far over the leash distance the camera has become
 	var over = cdistance - leash_distance
 	if over > 0.01:
