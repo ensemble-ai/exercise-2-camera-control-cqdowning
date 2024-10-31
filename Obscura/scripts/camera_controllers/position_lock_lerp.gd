@@ -1,8 +1,8 @@
 class_name PositionLockLerp
 extends CameraControllerBase
 
-@export var follow_speed:float = 0.05
-@export var catchup_speed:float = 0.075
+@export var follow_speed:float = 0.02
+@export var catchup_speed:float = 0.05
 @export var leash_distance:float = 13.0
 
 const CROSSHAIR_LENGTH:float = 5.0

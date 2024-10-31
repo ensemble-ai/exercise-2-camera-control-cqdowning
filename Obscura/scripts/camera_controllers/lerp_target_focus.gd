@@ -1,10 +1,10 @@
 class_name LerpTargetFocus
 extends CameraControllerBase
 
-@export var lead_speed:float = 0.075
+@export var lead_speed:float = 0.02
 # In seconds
 @export var catchup_delay_duration:float = 0.15
-@export var catchup_speed:float = 0.1
+@export var catchup_speed:float = 0.06
 @export var leash_distance:float = 13.0
 
 const CROSSHAIR_LENGTH:float = 5.0
@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 	
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
 		#global_position += lead_speed * camera_lead_direction * delta
-		global_position = lerp(global_position, (0.5 * lead_speed * camera_lead_speed) * leash_distance * camera_lead_direction + target.position, lead_speed)
+		global_position = lerp(global_position, ((2 - lead_speed) * lead_speed * camera_lead_speed) * leash_distance * camera_lead_direction + target.position, lead_speed)
 		_catchup_delay_timer.start(catchup_delay_duration)
 	elif _catchup_delay_timer.is_stopped():
 		#global_position += catchup_speed * camera_player_direction * delta
