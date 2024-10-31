@@ -1,11 +1,19 @@
 class_name PositionLockLerp
 extends CameraControllerBase
+## Stage 3 - Position lock with lerp smoothing
+##
+## This camera implements a position lock camera using lerp
+## The camera will lag behind the vessel and smoothly catchup
 
+# The lerp weight for following a moving vessel
 @export var follow_speed:float = 0.02
+# The lerp weight for catching up to a stopped vessel
 @export var catchup_speed:float = 0.05
+# The maximum allowed distance the camera can be from the vessel
 @export var leash_distance:float = 13.0
 
-const CROSSHAIR_LENGTH:float = 5.0
+# The length of each part of the crosshair
+const CROSSHAIR_LENGTH:float = 2.5
 
 func _ready() -> void:
 	super()
@@ -19,28 +27,16 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
-	var tpos:Vector3 = target.global_position
-	var cpos:Vector3 = global_position
-	tpos.y = 0.0
-	cpos.y = 0.0
-
-	
-	# Fix camera overshooting
-	#if cdistance < 0.5 && target.velocity.length() < 0.01:
-		#cdistance = 0.0
-		#cdirection = Vector3(0.0, 0.0, 0.0)
-		#global_position = tpos
-
+	# When the vessel is moving, lerp towards it
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
-		#global_position += follow_speed * cdirection * delta
 		global_position = lerp(global_position, target.position, follow_speed)
 	else:
-		#global_position += catchup_speed * cdirection * delta
 		global_position = lerp(global_position, target.position, catchup_speed)
 	
-	# Recalculate new positions 
-	tpos = target.global_position
-	cpos = global_position
+	# Recalculate new positions of the vessel and camera
+	var tpos:Vector3 = target.global_position
+	var cpos:Vector3 = global_position
+	# Set the y-components to zero so the height difference between vessel and camera does not affect the distance and direction calculations
 	tpos.y = 0.0
 	cpos.y = 0.0
 	# How far apart are the camera and player
@@ -49,6 +45,7 @@ func _process(delta: float) -> void:
 	var cdirection:Vector3 = (tpos - cpos).normalized()
 	# Represents how far over the leash distance the camera has become
 	var over = cdistance - leash_distance
+	# If the camera goes over the leash distance, pull it back in towards the vessel
 	if over > 0.01:
 		global_position += over * cdirection
 	super(delta)

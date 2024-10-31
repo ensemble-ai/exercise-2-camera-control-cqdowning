@@ -1,7 +1,12 @@
 class_name PositionLock
 extends CameraControllerBase
+## Stage 1 - Position lock Camera
+##
+## This camera will always be centered on the Vessel
+## Draw logic creates a 5 by 5 unit cross in the center of the screen
 
-const CROSSHAIR_LENGTH:float = 5.0
+# The length of each part of the crosshair
+const CROSSHAIR_LENGTH:float = 2.5
 
 func _ready() -> void:
 	super()
@@ -15,8 +20,10 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
+	# Get the vessel position
 	var tpos = target.global_position
 	
+	# Move camera to vessel position
 	global_position.x = tpos.x
 	global_position.z = tpos.z
 		

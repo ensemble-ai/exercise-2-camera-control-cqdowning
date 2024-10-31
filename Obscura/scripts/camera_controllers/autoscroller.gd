@@ -1,8 +1,15 @@
 class_name Autoscroller
 extends CameraControllerBase
+## Stage 2 - Framing with auto-scroll
+##
+## This camera implements a frame-bound autoscroller
+## The vessel will move with the autoscroller and cannot leave the bounds
 
+# The position of the top left corner of the frame
 @export var top_left:Vector2 = Vector2(-24.0, 12.0)
+# The position of the bottom right corner of the frame
 @export var bottom_right:Vector2 = Vector2(24.0, -12.0)
+# The velocity of the autoscrolling camera
 @export var autoscroll_speed:Vector3 = Vector3(3.0, 0.0, 3.0)
 
 func _ready() -> void:
@@ -17,15 +24,20 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
+	# Multiply autoscroll_speed by delta do that camera speed is unaffected by framerate
 	var actual_speed:Vector3 = autoscroll_speed * delta
 	
+	# Move the camera and player at the autoscroll speed
 	global_position += actual_speed
 	target.position += actual_speed
 	
+	# Get the position of the vessel
 	var tpos = target.global_position
+	# Get the position of the camera
 	var cpos = global_position
 	
 	# Boundary checks
+	# These move the vessel back into the camera's frame if the vessel tries to leave it
 	# Top
 	var diff_between_top_edges = (tpos.z - target.HEIGHT / 2.0) - (cpos.z - top_left.y)
 	if diff_between_top_edges < 0:

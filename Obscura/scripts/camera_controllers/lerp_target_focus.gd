@@ -1,19 +1,29 @@
 class_name LerpTargetFocus
 extends CameraControllerBase
+## Stage 4 - Target focus with lerp
+##
+## This camera implements a look-ahead camera using lerp
+## The camera will move ahead of the vessel in the direction of movement
 
+# Lerp weight for camera moving ahead
 @export var lead_speed:float = 0.02
-# In seconds
+# Time in seconds of delay before camera returns to vessel
 @export var catchup_delay_duration:float = 0.15
+# Lerp weight for camera returning to vessel
 @export var catchup_speed:float = 0.06
+# The maximum allowed distance the camera can be from the vessel
 @export var leash_distance:float = 13.0
 
-const CROSSHAIR_LENGTH:float = 5.0
+# The length of each part of the crosshair
+const CROSSHAIR_LENGTH:float = 2.5
 
+# Timer for the catchup delay
 var _catchup_delay_timer:Timer
 
 func _ready() -> void:
 	super()
 	position = target.position
+	# Initialize the timer
 	_catchup_delay_timer = Timer.new()
 	add_child(_catchup_delay_timer)
 	_catchup_delay_timer.one_shot = true
@@ -25,42 +35,40 @@ func _process(delta: float) -> void:
 	
 	if draw_camera_logic:
 		draw_logic()
-	
+		
+	# Calculate the positions of vessel and camera
 	var tpos:Vector3 = target.global_position
 	var cpos:Vector3 = global_position
+	# Set the y-components to zero so the height difference between vessel and camera does not affect the distance and direction calculations
 	tpos.y = 0.0
 	cpos.y = 0.0
 	
-	# The direction the camera should move in
+	# The direction the camera should move ahead in
 	var camera_lead_direction:Vector3 = (target.velocity).normalized()
-	# The direction the camera should move in
+	# The direction the camera should move back toward the vessel in
 	var camera_player_direction:Vector3 = (tpos - cpos).normalized()
-	
-	var camera_lead_speed:float = (target.velocity).length()
-	
-	# Fix camera overshooting
-	#if cdistance < 0.5 && target.velocity.length() < 0.01:
-		#cdistance = 0.0
-		#camera_player_direction = Vector3(0.0, 0.0, 0.0)
-		#global_position = tpos
-	
+	# Use the vessel speed to help the camera reach max leash distance
+	var camera_lead_speed_multiplier:float = (target.velocity).length()
+	# When the vessel is moving, lerp ahead of it
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
-		#global_position += lead_speed * camera_lead_direction * delta
-		global_position = lerp(global_position, ((2 - lead_speed) * lead_speed * camera_lead_speed) * leash_distance * camera_lead_direction + target.position, lead_speed)
+		global_position = lerp(global_position, ((2 - lead_speed) * lead_speed * camera_lead_speed_multiplier) * leash_distance * camera_lead_direction + target.position, lead_speed)
+		# Repeatedly begin the timer while vessel is moving
 		_catchup_delay_timer.start(catchup_delay_duration)
+	# When the vessel is not moving, the timer can tick down then the camera is allowed to return to the vessel
 	elif _catchup_delay_timer.is_stopped():
-		#global_position += catchup_speed * camera_player_direction * delta
 		global_position = lerp(global_position, target.position, catchup_speed)
 	
-	# Recalculate new positions 
+	# Recalculate new positions for after the lerp
 	tpos = target.global_position
 	cpos = global_position
+	# Set the y-components to zero so the height difference between vessel and camera does not affect the distance and direction calculations
 	tpos.y = 0.0
 	cpos.y = 0.0
 	# How far apart are the camera and player
 	var cdistance:float = abs(tpos - cpos).length()
 	# Represents how far over the leash distance the camera has become
 	var over = cdistance - leash_distance
+	# If the camera goes over the leash distance, pull it back in towards the vessel
 	if over > 0.01:
 		global_position += over * camera_player_direction
 	super(delta)

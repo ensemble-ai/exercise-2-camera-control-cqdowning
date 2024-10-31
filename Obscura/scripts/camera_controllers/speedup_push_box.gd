@@ -1,10 +1,20 @@
 class_name SpeedupPushBox
 extends CameraControllerBase
+## Stage 5 - 4-way speedup push zone
+##
+## This camera implements a 4-directional speedup push zone
+## When the vessel enters the speedup zone, the camera moves at a fraction of the vessel's speed
+## When the vessel touches the outer pushbox, the camera moves at the vessel's speed
 
+# The ratio that the camera should move toward the target when it is not at the edge of the outer pushbox
 @export var push_ratio:float = 0.5
+# The top left corner of the push zone border box
 @export var pushbox_top_left:Vector2 = Vector2(-24.0, 12.0)
+# The bottom right corner of the push zone border box
 @export var pushbox_bottom_right:Vector2 = Vector2(24.0, -12.0)
+# The top left corner of the inner border of the speedup zone
 @export var speedup_zone_top_left:Vector2 = Vector2(-16.0, 8.0)
+# The bottom right cordner of the inner boarder of the speedup zone
 @export var speedup_zone_bottom_right:Vector2 = Vector2(16.0, -8.0)
 
 
@@ -19,11 +29,15 @@ func _process(delta: float) -> void:
 	
 	if draw_camera_logic:
 		draw_logic()
-	
+
+	# Calculate the positions of vessel and camera
 	var tpos = target.global_position
 	var cpos = global_position
 	
 	# Boundary checks
+	# These check for when the vessel is inside the speedup zone or when the vessel is against the pushbox
+	# When the vessel is in the speedup zone, the camera is allowed to move outward at a fraction of the vessel's speed
+	# When the vessel is against the pushbox, the camera moves at the same speed and direction as the vessel
 	# Top
 	var pushbox_diff_between_top_edges = (tpos.z - target.HEIGHT / 2.0) - (cpos.z - pushbox_top_left.y)
 	var speedup_diff_between_top_edges = (tpos.z - target.HEIGHT / 2.0) - (cpos.z - speedup_zone_top_left.y)
@@ -57,6 +71,7 @@ func _process(delta: float) -> void:
 
 
 func draw_logic() -> void:
+	# Draw speedup zone
 	var speedup_mesh_instance := MeshInstance3D.new()
 	var speedup_immediate_mesh := ImmediateMesh.new()
 	var speedup_material := ORMMaterial3D.new()
@@ -86,6 +101,7 @@ func draw_logic() -> void:
 	speedup_mesh_instance.global_transform = Transform3D.IDENTITY
 	speedup_mesh_instance.global_position = Vector3(global_position.x, target.global_position.y, global_position.z)
 	
+	# Draw pushbox
 	var pushbox_mesh_instance := MeshInstance3D.new()
 	var pushbox_immediate_mesh := ImmediateMesh.new()
 	var pushbox_material := ORMMaterial3D.new()

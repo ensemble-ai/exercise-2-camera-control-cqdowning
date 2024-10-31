@@ -1,17 +1,32 @@
 class_name DayNightCycle
 extends DirectionalLight3D
+## Day-Night Cycle Controller
+##
+## This script controls the day-night cycle of the world
+## This changes the angle, brightness, and color of the sun/moon according the current time
 
+# The speed of the entire day-night cycle
 @export var speed:float = 7.0
+# The color of the sunrise
 @export var sunrise_color:Color
+# The color of the daytime
 @export var day_color:Color
+# the color of the sunset
 @export var sunset_color:Color
+# The color of the nighttime
 @export var night_color:Color
 
+# The length of the day
 const DAY_LENGTH:float = 160.0
+# The length of the night
 const NIGHT_LENGTH:float = 80.0
 
+# The current time
+# This is zero at the start of the day AND at the start of the night
 var _current_time:float = 0.0
+# Whether it is daytime or not
 var _is_daytime:bool = true
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,24 +35,36 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Make sure y rotation is constant
 	global_rotation.y = deg_to_rad(90)
+	# Have time move
 	_current_time += speed * delta
+	# Handle switching from daytime to nighttime
 	if _is_daytime && _current_time > DAY_LENGTH:
 		_current_time = 0
 		_is_daytime = false
+	# Handle switching from nighttime to daytime
 	if !_is_daytime && _current_time > NIGHT_LENGTH:
 		_current_time = 0
 		_is_daytime = true
+	
+	# Handle the angle of the light
 	_orbit()
+	# Handle the brightness of the light
 	_energy()
+	# Handle the color of the light
 	_color()
 
+
+# Handles the angle of the global light according to current time
 func _orbit():
 	if _is_daytime:
 		global_rotation.x = deg_to_rad(lerp(180.0, 360.0, _current_time / DAY_LENGTH))
 	else:
 		global_rotation.x = deg_to_rad(lerp(180.0, 360.0, _current_time / NIGHT_LENGTH))
 
+
+# Handles the brightness of the global light according to current time
 func _energy():
 	if _is_daytime:
 		if _current_time < DAY_LENGTH * 0.40:
@@ -47,6 +74,8 @@ func _energy():
 	else:
 		light_energy = 0.1
 
+
+# Handles the color of the global light according to current time
 func _color():
 	if _is_daytime:
 		if _current_time < DAY_LENGTH * 0.10:
