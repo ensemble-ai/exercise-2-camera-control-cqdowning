@@ -29,7 +29,6 @@ func _process(_delta):
 		_play($Audio/Terraforming)
 		terrain_manager.move_vertex_below_position(global_position, -terrforming_power)
 
-	
 	var input_dir = Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
 		Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")

@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
-	# Multiply autoscroll_speed by delta do that camera speed is unaffected by framerate
+	# Multiply autoscroll_speed by delta so that camera speed is unaffected by framerate
 	var actual_speed:Vector3 = autoscroll_speed * delta
 	
 	# Move the camera and player at the autoscroll speed

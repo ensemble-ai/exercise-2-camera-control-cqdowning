@@ -35,7 +35,3 @@ func _process(_delta):
 					current_controller = index
 					cameras[current_controller].make_current()
 					cameras[current_controller].reset_to_target()
-					
-			
-		
-	

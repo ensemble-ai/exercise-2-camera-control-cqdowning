@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 		global_position = lerp(global_position, (camera_lead_speed_multiplier * leash_distance * camera_lead_direction) + target.position, 1 - pow(2, -lead_speed * delta)) # Makes lerp framerate independent
 		# Repeatedly begin the timer while vessel is moving
 		_catchup_delay_timer.start(catchup_delay_duration)
-	# When the vessel is not moving, the timer can tick down then the camera is allowed to return to the vessel
+	# When the vessel is not moving, the timer can tick down and then the camera is allowed to return to the vessel
 	elif _catchup_delay_timer.is_stopped():
 		global_position = lerp(global_position, target.position, 1 - pow(2, -catchup_speed * delta))
 	
