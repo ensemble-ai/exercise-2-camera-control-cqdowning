@@ -15,11 +15,10 @@ extends DirectionalLight3D
 @export var sunset_color:Color
 # The color of the nighttime
 @export var night_color:Color
-
 # The length of the day
-const DAY_LENGTH:float = 160.0
+@export var day_length:float = 160.0
 # The length of the night
-const NIGHT_LENGTH:float = 80.0
+@export var night_length:float = 80.0
 
 # The current time
 # This is zero at the start of the day AND at the start of the night
@@ -40,11 +39,11 @@ func _process(delta):
 	# Have time move
 	_current_time += speed * delta
 	# Handle switching from daytime to nighttime
-	if _is_daytime && _current_time > DAY_LENGTH:
+	if _is_daytime && _current_time > day_length:
 		_current_time = 0
 		_is_daytime = false
 	# Handle switching from nighttime to daytime
-	if !_is_daytime && _current_time > NIGHT_LENGTH:
+	if !_is_daytime && _current_time > night_length:
 		_current_time = 0
 		_is_daytime = true
 	
@@ -59,18 +58,18 @@ func _process(delta):
 # Handles the angle of the global light according to current time
 func _orbit():
 	if _is_daytime:
-		global_rotation.x = deg_to_rad(lerp(180.0, 360.0, _current_time / DAY_LENGTH))
+		global_rotation.x = deg_to_rad(lerp(180.0, 360.0, _current_time / day_length))
 	else:
-		global_rotation.x = deg_to_rad(lerp(180.0, 360.0, _current_time / NIGHT_LENGTH))
+		global_rotation.x = deg_to_rad(lerp(180.0, 360.0, _current_time / night_length))
 
 
 # Handles the brightness of the global light according to current time
 func _energy():
 	if _is_daytime:
-		if _current_time < DAY_LENGTH * 0.40:
-			light_energy = lerp(0.1, 1.0, _current_time / (DAY_LENGTH * 0.40))
-		elif _current_time > DAY_LENGTH * 0.60:
-			light_energy = lerp(1.0, 0.1, (_current_time - (DAY_LENGTH * 0.60)) / (DAY_LENGTH * 0.40))
+		if _current_time < day_length * 0.40:
+			light_energy = lerp(0.1, 1.0, _current_time / (day_length * 0.40))
+		elif _current_time > day_length * 0.60:
+			light_energy = lerp(1.0, 0.1, (_current_time - (day_length * 0.60)) / (day_length * 0.40))
 	else:
 		light_energy = 0.1
 
@@ -78,13 +77,13 @@ func _energy():
 # Handles the color of the global light according to current time
 func _color():
 	if _is_daytime:
-		if _current_time < DAY_LENGTH * 0.10:
-			light_color = lerp(night_color, sunrise_color, _current_time / (DAY_LENGTH * 0.10))
-		elif _current_time < DAY_LENGTH * 0.30:
-			light_color = lerp(sunrise_color, day_color, (_current_time - (DAY_LENGTH * 0.10)) / (DAY_LENGTH * 0.20))
-		elif _current_time > DAY_LENGTH * 0.70:
-			light_color = lerp(day_color, sunset_color, (_current_time - (DAY_LENGTH * 0.70)) / (DAY_LENGTH * 0.20))
-		elif _current_time > DAY_LENGTH * 0.90:
-			light_color = lerp(sunset_color, night_color, (_current_time - (NIGHT_LENGTH * 0.90)) / (NIGHT_LENGTH * 0.10))
+		if _current_time < day_length * 0.10:
+			light_color = lerp(night_color, sunrise_color, _current_time / (day_length * 0.10))
+		elif _current_time < day_length * 0.30:
+			light_color = lerp(sunrise_color, day_color, (_current_time - (day_length * 0.10)) / (day_length * 0.20))
+		elif _current_time > day_length * 0.70:
+			light_color = lerp(day_color, sunset_color, (_current_time - (day_length * 0.70)) / (day_length * 0.20))
+		elif _current_time > day_length * 0.90:
+			light_color = lerp(sunset_color, night_color, (_current_time - (day_length * 0.90)) / (day_length * 0.10))
 	else:
 		light_color = night_color

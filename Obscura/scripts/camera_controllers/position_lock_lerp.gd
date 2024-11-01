@@ -5,6 +5,9 @@ extends CameraControllerBase
 ## This camera implements a position lock camera using lerp
 ## The camera will lag behind the vessel and smoothly catchup
 
+# The length of each part of the crosshair
+const CROSSHAIR_LENGTH:float = 2.5
+
 # The lerp rate for following a moving vessel
 @export var follow_speed:float = 4
 # The lerp rate for catching up to a stopped vessel
@@ -12,8 +15,6 @@ extends CameraControllerBase
 # The maximum allowed distance the camera can be from the vessel
 @export var leash_distance:float = 13.0
 
-# The length of each part of the crosshair
-const CROSSHAIR_LENGTH:float = 2.5
 
 func _ready() -> void:
 	super()
@@ -49,6 +50,7 @@ func _process(delta: float) -> void:
 	if over > 0.01:
 		global_position += over * cdirection
 	super(delta)
+
 
 func draw_logic() -> void:
 	var mesh_instance := MeshInstance3D.new()

@@ -5,6 +5,9 @@ extends CameraControllerBase
 ## This camera implements a look-ahead camera using lerp
 ## The camera will move ahead of the vessel in the direction of movement
 
+# The length of each part of the crosshair
+const CROSSHAIR_LENGTH:float = 2.5
+
 # Lerp rate for camera moving ahead
 @export var lead_speed:float = 3
 # Time in seconds of delay before camera returns to vessel
@@ -14,11 +17,9 @@ extends CameraControllerBase
 # The maximum allowed distance the camera can be from the vessel
 @export var leash_distance:float = 13.0
 
-# The length of each part of the crosshair
-const CROSSHAIR_LENGTH:float = 2.5
-
 # Timer for the catchup delay
 var _catchup_delay_timer:Timer
+
 
 func _ready() -> void:
 	super()
@@ -48,7 +49,7 @@ func _process(delta: float) -> void:
 	# The direction the camera should move back toward the vessel in
 	var camera_player_direction:Vector3 = (tpos - cpos).normalized()
 	# Use the vessel speed to help the camera reach max leash distance
-	var camera_lead_speed_multiplier:float = (target.velocity).length() * 0.065
+	var camera_lead_speed_multiplier:float = (target.velocity).length() * 0.06
 	# When the vessel is moving, lerp ahead of it
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
 		global_position = lerp(global_position, (camera_lead_speed_multiplier * leash_distance * camera_lead_direction) + target.position, 1 - pow(2, -lead_speed * delta)) # Makes lerp framerate independent
@@ -72,6 +73,7 @@ func _process(delta: float) -> void:
 	if over > 0.01:
 		global_position += over * camera_player_direction
 	super(delta)
+
 
 func draw_logic() -> void:
 	var mesh_instance := MeshInstance3D.new()

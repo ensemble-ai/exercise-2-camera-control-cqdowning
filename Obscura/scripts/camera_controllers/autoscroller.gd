@@ -12,6 +12,7 @@ extends CameraControllerBase
 # The velocity of the autoscrolling camera
 @export var autoscroll_speed:Vector3 = Vector3(3.0, 0.0, 3.0)
 
+
 func _ready() -> void:
 	super()
 	position = target.position

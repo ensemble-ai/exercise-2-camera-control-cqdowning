@@ -33,6 +33,7 @@ var _ready_to_generate = false
 var _mdt:MeshDataTool = MeshDataTool.new()
 var _plane_mesh:PlaneMesh = PlaneMesh.new()
 
+
 func _ready():
 	_ready_to_generate = true
 	_generate_terrain()

@@ -8,6 +8,7 @@ extends CameraControllerBase
 # The length of each part of the crosshair
 const CROSSHAIR_LENGTH:float = 2.5
 
+
 func _ready() -> void:
 	super()
 	position = target.position
