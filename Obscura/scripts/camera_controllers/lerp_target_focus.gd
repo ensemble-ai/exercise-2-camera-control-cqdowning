@@ -5,12 +5,12 @@ extends CameraControllerBase
 ## This camera implements a look-ahead camera using lerp
 ## The camera will move ahead of the vessel in the direction of movement
 
-# Lerp weight for camera moving ahead
-@export var lead_speed:float = 0.02
+# Lerp rate for camera moving ahead
+@export var lead_speed:float = 3
 # Time in seconds of delay before camera returns to vessel
 @export var catchup_delay_duration:float = 0.15
-# Lerp weight for camera returning to vessel
-@export var catchup_speed:float = 0.06
+# Lerp rate for camera returning to vessel
+@export var catchup_speed:float = 5
 # The maximum allowed distance the camera can be from the vessel
 @export var leash_distance:float = 13.0
 
@@ -48,15 +48,15 @@ func _process(delta: float) -> void:
 	# The direction the camera should move back toward the vessel in
 	var camera_player_direction:Vector3 = (tpos - cpos).normalized()
 	# Use the vessel speed to help the camera reach max leash distance
-	var camera_lead_speed_multiplier:float = (target.velocity).length()
+	var camera_lead_speed_multiplier:float = (target.velocity).length() * 0.065
 	# When the vessel is moving, lerp ahead of it
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
-		global_position = lerp(global_position, ((2 - lead_speed) * lead_speed * camera_lead_speed_multiplier) * leash_distance * camera_lead_direction + target.position, lead_speed)
+		global_position = lerp(global_position, (camera_lead_speed_multiplier * leash_distance * camera_lead_direction) + target.position, 1 - pow(2, -lead_speed * delta)) # Makes lerp framerate independent
 		# Repeatedly begin the timer while vessel is moving
 		_catchup_delay_timer.start(catchup_delay_duration)
 	# When the vessel is not moving, the timer can tick down then the camera is allowed to return to the vessel
 	elif _catchup_delay_timer.is_stopped():
-		global_position = lerp(global_position, target.position, catchup_speed)
+		global_position = lerp(global_position, target.position, 1 - pow(2, -catchup_speed * delta))
 	
 	# Recalculate new positions for after the lerp
 	tpos = target.global_position

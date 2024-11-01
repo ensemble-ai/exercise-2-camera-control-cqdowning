@@ -5,10 +5,10 @@ extends CameraControllerBase
 ## This camera implements a position lock camera using lerp
 ## The camera will lag behind the vessel and smoothly catchup
 
-# The lerp weight for following a moving vessel
-@export var follow_speed:float = 0.02
-# The lerp weight for catching up to a stopped vessel
-@export var catchup_speed:float = 0.05
+# The lerp rate for following a moving vessel
+@export var follow_speed:float = 4
+# The lerp rate for catching up to a stopped vessel
+@export var catchup_speed:float = 6
 # The maximum allowed distance the camera can be from the vessel
 @export var leash_distance:float = 13.0
 
@@ -29,9 +29,9 @@ func _process(delta: float) -> void:
 	
 	# When the vessel is moving, lerp towards it
 	if abs(target.velocity) > Vector3(0.0, 0.0, 0.0):
-		global_position = lerp(global_position, target.position, follow_speed)
+		global_position = lerp(global_position, target.position, 1 - pow(2, -follow_speed * delta)) # Makes lerp framerate independent
 	else:
-		global_position = lerp(global_position, target.position, catchup_speed)
+		global_position = lerp(global_position, target.position, 1 - pow(2, -catchup_speed * delta)) # Makes lerp framerate independent
 	
 	# Recalculate new positions of the vessel and camera
 	var tpos:Vector3 = target.global_position
