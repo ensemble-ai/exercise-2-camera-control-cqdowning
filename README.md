@@ -1,4 +1,4 @@
-# Important Information
+# !!! Important Information !!!
 
 I made some changes to the base project. The first change is a day-night cycle that is controlled by a script attached to the directional light in the world scene. This also involved adding proper shading to the terrain by calculating the normals of each vertex in the terrain manager. The second change is the addition of a fisheye post-processing effect to give the world some curvature. This is controlled by the "FisheyeShader" node in the world scene. It can be disabled by simply hiding it in the scene. 
 
