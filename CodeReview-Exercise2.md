@@ -60,8 +60,7 @@ ___
 
 ___
 #### Justification ##### 
-Write Justification here.
-
+The camera controller is always centered on the vessel, successfully fulfilling the Stage 1 requirements. The crosshair’s position is locked onto the vessel’s location.
 ___
 ### Stage 2 ###
 
@@ -99,7 +98,6 @@ ___
 
 ___
 #### Justification ##### 
-The camera controller is always centered on the vessel which 
 
 ___
 ### Stage 5 ###
