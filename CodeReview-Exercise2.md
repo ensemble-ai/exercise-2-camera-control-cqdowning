@@ -130,16 +130,15 @@ Please refer to the first code review template on how to do a permalink.
 #### Style Guide Infractions ####
 For the most part, the student did well to ensure they stayed within the style guidelines. However, when reviewing their code, the only infraction I noticed was the student's violation of the 100-character guideline. As shown in these permalinks:
 
-- Violation within push_box.gd
-- Violation within lerp_target_focus.gd
+- [Violation within push_box.gd](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/push_box.gd#L77)
+- [Violation within lerp_target_focus.gd](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/lerp_target_focus.gd#L55)
 
 There were quite a few infractions of over 100 characters, but other than that, the student did well in following the other style guidelines.
 
 #### Style Guide Exemplars ####
 What I noticed the student did well was the spacing when using operators, as seen in these permalinks:
 
-- here
-- here
+- [Excellent spacing](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/autoscroller.gd#L55)
 
 By following this style convention and adding spaces around the operators, the readability of the code is much improved.
 
@@ -160,10 +159,11 @@ If the student has breached the best practices and has done something that shoul
 This should be similar to the Code Style justification.
 
 #### Best Practices Infractions ####
+From what I've seen when reviewing the student's code, I was unable to find any infractions of best practices. The student did really well to ensure that comments, variable names, classes, etc., align with the best practices guidelines. This leads me to believe that the student is an experienced programmer and has developed these good practices as habits.
 
 #### Best Practices Exemplars ####
-- The student did really well commenting their code, providing clear explanations for each section and making it easy to understand the purpose of their logic and functions. This is great practice for maintaining readability and ensuring that others (or their future self) can follow the code with ease.
+- [Variable names](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/lerp_target_focus.gd#L21C5-L21C25) - The student also did a good job naming their variables. Their names were clear and descripting which, again, is good pracitce to making their code are easilyt readable and mainatblaes.
 
-- The student did an excellent job naming their variables. They used clear, descriptive names that accurately reflect the purpose of each variable, making the code more readable and maintainable. For example, variable names like playerSpeed and cameraPosition immediately convey their roles within the code. This attention to naming conventions improves the overall clarity and reduces the likelihood of confusion for anyone reviewing or working with the code in the future.
+- The student did really well commentin their code and providing clear explanantion and justification for why and what their code are doing. This made it really wasy to undetand and is a great pracitce for maintating readability and ensuring others can follow their code with ease.
   
-- The student also made a lot of commits to their repo, which is a great practice to help with version control, keeping track of progress, and allowing for easy debugging. Frequent commits demonstrate a disciplined approach to development and ensure that any issues can be traced back to specific changes. This is an excellent habit that will serve them well in collaborative environments.
+- The student also made a lot of commits to their repo, which is a great practice to help with version control, keeping track of progress, and allowing for easy debugging. 
