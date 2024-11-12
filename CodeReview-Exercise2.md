@@ -131,7 +131,7 @@ Please refer to the first code review template on how to do a permalink.
 For the most part, the student did well to ensure they stayed within the style guidelines. However, when reviewing their code, the only infraction I noticed was the student's violation of the 100-character guideline. As shown in these permalinks:
 
 - [Violation within push_box.gd](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/push_box.gd#L77)
-- [Violation within lerp_target_focus.gd](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/lerp_target_focus.gd#L55)
+- [Violation within lerp_target_focus.gd](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/lerp_target_focus.gd#L55) - This one specifically was really long, and on top of that, the student added a comment to the end of this line of code, thus making it longer. The student should have at least put the comment on a new line, and for every violation of the 100-character guideline, the programmer should wrap the line.
 
 There were quite a few infractions of over 100 characters, but other than that, the student did well in following the other style guidelines.
 
