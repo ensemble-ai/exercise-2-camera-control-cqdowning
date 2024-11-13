@@ -154,6 +154,8 @@ This should be similar to the Code Style justification.
 
 #### Best Practices Infractions ####
 * should avoid copy pasting [comments](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/position_lock_lerp.gd#L35)
+* could use a seprate function for [this](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/speedup_push_box.gd#L73), it is too long and too much repeated code.
 
 #### Best Practices Exemplars ####
 * good descriptive [name](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/autoscroller.gd#L29)
+* good [comment](https://github.com/ensemble-ai/exercise-2-camera-control-cqdowning/blob/322ec6d064ae003b9b93aed034ad6e4a4ca1fb49/Obscura/scripts/camera_controllers/autoscroller.gd#L41)
